@@ -74,6 +74,8 @@ func main() {
 		os.Exit(1)
 	}
 
+    fmt.Println("Pictures path ", msg.Path)
+    
 	config := &oauth.Config{
 		ClientId:     msg.ClientId,
 		ClientSecret: msg.ClientSecret,
