@@ -1,3 +1,11 @@
+/*
+{
+    "ClientId":     "xxxxxx.apps.googleusercontent.com",
+    "ClientSecret": "xxxxxxxx",
+    "Path": "C:\\Users\\xxxxxx\\Pictures\\personal"
+}
+*/
+
 package main
 
 import (
@@ -9,10 +17,10 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"os/user"
+	"path"
 	"path/filepath"
-    "os/user"
 	"sort"
-    "path"
 )
 
 var (
@@ -42,7 +50,7 @@ func (p PairList) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
 func (p PairList) Len() int           { return len(p) }
 func (p PairList) Less(i, j int) bool { return p[i].Value < p[j].Value }
 
-// A function to turn a map into a PairList, then sort and return it. 
+// A function to turn a map into a PairList, then sort and return it.
 func sortMapByValue(m map[string]int64) PairList {
 	p := make(PairList, len(m))
 	i := 0
@@ -79,8 +87,8 @@ func main() {
 		os.Exit(1)
 	}
 
-    fmt.Println("Pictures path ", msg.Path)
-    
+	fmt.Println("Pictures path ", msg.Path)
+
 	config := &oauth.Config{
 		ClientId:     msg.ClientId,
 		ClientSecret: msg.ClientSecret,
