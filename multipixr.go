@@ -10,7 +10,9 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+    "os/user"
 	"sort"
+    "path"
 )
 
 var (
@@ -59,16 +61,19 @@ type Message struct {
 }
 
 func main() {
-
-	file, e := ioutil.ReadFile("./multipixr.json")
-	if e != nil {
-		fmt.Printf("File error: %v\n", e)
-		os.Exit(1)
+	usr, err := user.Current()
+	if err != nil {
+		log.Fatal(err)
 	}
 
-	var jsonBlob = []byte(string(file))
+	appconfig, err := ioutil.ReadFile(path.Join(usr.HomeDir, ".multipixr.json"))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var jsonBlob = []byte(string(appconfig))
 	var msg Message
-	e = json.Unmarshal(jsonBlob, &msg)
+	e := json.Unmarshal(jsonBlob, &msg)
 	if e != nil {
 		fmt.Println("error:", e)
 		os.Exit(1)
